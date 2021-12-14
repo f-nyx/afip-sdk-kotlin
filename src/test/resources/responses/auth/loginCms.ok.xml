@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <loginCmsResponse xmlns="http://wsaa.view.sua.dvadac.desein.afip.gov">
+            <loginCmsReturn>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+                &lt;loginTicketResponse version="1.0"&gt;
+                &lt;header&gt;
+                &lt;source&gt;CN=wsaahomo, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239&lt;/source&gt;
+                &lt;destination&gt;SERIALNUMBER=CUIT 20304050603, CN=NyxCo&lt;/destination&gt;
+                &lt;uniqueId&gt;3203779598&lt;/uniqueId&gt;
+                &lt;generationTime&gt;2021-12-13T00:24:14.923-03:00&lt;/generationTime&gt;
+                &lt;expirationTime&gt;2021-12-13T12:24:14.923-03:00&lt;/expirationTime&gt;
+                &lt;/header&gt;
+                &lt;credentials&gt;
+                &lt;token&gt;PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8c3NvIHZlcnNpb249IjIuMCI+CiAgICA8aWQgc3JjPSJDTj13c2FhaG9tbywgTz1BRklQLCBDPUFSLCBTRVJJQUxOVU1CRVI9Q1VJVCAzMzY5MzQ1MDIzOSIgZHN0PSJDTj13c2ZlLCBPPUFGSVAsIEM9QVIiIHVuaXF1ZV9pZD0iMjI2ODQ0NTkyMyIgZ2VuX3RpbWU9IjE2MzkzNjU3OTQiIGV4cF90aW1lPSIxNjM5NDA5MDU0Ii8+CiAgICA8b3BlcmF0aW9uIHR5cGU9ImxvZ2luIiB2YWx1ZT0iZ3JhbnRlZCI+CiAgICAgICAgPGxvZ2luIGVudGl0eT0iMzM2OTM0NTAyMzkiIHNlcnZpY2U9IndzZmUiIHVpZD0iU0VSSUFMTlVNQkVSPUNVSVQgMjAzMDQwNTA2MDMsIENOPU55eENvIiBhdXRobWV0aG9kPSJjbXMiIHJlZ21ldGhvZD0iMjIiPgogICAgICAgICAgICA8cmVsYXRpb25zPgogICAgICAgICAgICAgICAgPHJlbGF0aW9uIGtleT0iMjAzMDQwNTA2MDMiIHJlbHR5cGU9IjQiLz4KICAgICAgICAgICAgPC9yZWxhdGlvbnM+CiAgICAgICAgPC9sb2dpbj4KICAgIDwvb3BlcmF0aW9uPgo8L3Nzbz4=&lt;/token&gt;
+                &lt;sign&gt;RLQv2BKV/t1ItR8JSoztGZcnCE2+vunamlM+y+gCfWIai5Ne8xyq6akbVZpAcxpp1tb4sqj2WywouTPsW0h9+4xLgp1Ew37SgvdwoGMzGzbcB0UPr18q4Jee0k2wC2F+4nsAFyjzXT5arq3Dz5TkyApI1bPPYNxe5TteHJ2YisU=&lt;/sign&gt;
+                &lt;/credentials&gt;
+                &lt;/loginTicketResponse&gt;</loginCmsReturn>
+        </loginCmsResponse>
+    </soapenv:Body>
+</soapenv:Envelope>

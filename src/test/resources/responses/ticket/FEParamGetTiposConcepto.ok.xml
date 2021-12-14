@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Header>
+        <FEHeaderInfo xmlns="http://ar.gov.afip.dif.FEV1/">
+            <ambiente>HomologacionExterno - efa</ambiente>
+            <fecha>2021-12-10T01:30:13.085585-03:00</fecha>
+            <id>4.4.0.0</id>
+        </FEHeaderInfo>
+    </soap:Header>
+    <soap:Body>
+        <FEParamGetTiposConceptoResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+            <FEParamGetTiposConceptoResult>
+                <ResultGet>
+                    <ConceptoTipo>
+                        <Id>1</Id>
+                        <Desc>Producto</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </ConceptoTipo>
+                    <ConceptoTipo>
+                        <Id>2</Id>
+                        <Desc>Servicios</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </ConceptoTipo>
+                    <ConceptoTipo>
+                        <Id>3</Id>
+                        <Desc>Productos y Servicios</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </ConceptoTipo>
+                </ResultGet>
+            </FEParamGetTiposConceptoResult>
+        </FEParamGetTiposConceptoResponse>
+    </soap:Body>
+</soap:Envelope>

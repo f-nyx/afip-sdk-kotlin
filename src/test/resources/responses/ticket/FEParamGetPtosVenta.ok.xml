@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Header>
+        <FEHeaderInfo xmlns="http://ar.gov.afip.dif.FEV1/">
+            <ambiente>HomologacionExterno - efa</ambiente>
+            <fecha>2021-12-10T13:32:39.1623442-03:00</fecha>
+            <id>4.4.0.0</id>
+        </FEHeaderInfo>
+    </soap:Header>
+    <soap:Body>
+        <FEParamGetPtosVentaResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+            <FEParamGetPtosVentaResult>
+                <ResultGet>
+                    <PtoVenta>
+                        <Nro>0</Nro>
+                        <EmisionTipo>CAE</EmisionTipo>
+                        <Bloqueado>N</Bloqueado>
+                    </PtoVenta>
+                    <PtoVenta>
+                        <Nro>1</Nro>
+                        <EmisionTipo>CAE</EmisionTipo>
+                        <Bloqueado>S</Bloqueado>
+                    </PtoVenta>
+                </ResultGet>
+            </FEParamGetPtosVentaResult>
+        </FEParamGetPtosVentaResponse>
+    </soap:Body>
+</soap:Envelope>

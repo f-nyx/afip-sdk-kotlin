@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Header>
+        <FEHeaderInfo xmlns="http://ar.gov.afip.dif.FEV1/">
+            <ambiente>HomologacionExterno - efa</ambiente>
+            <fecha>2021-12-10T12:45:56.3235771-03:00</fecha>
+            <id>4.4.0.0</id>
+        </FEHeaderInfo>
+    </soap:Header>
+    <soap:Body>
+        <FEParamGetTiposIvaResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+            <FEParamGetTiposIvaResult>
+                <ResultGet>
+                    <IvaTipo>
+                        <Id>3</Id>
+                        <Desc>0%</Desc>
+                        <FchDesde>20090220</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </IvaTipo>
+                    <IvaTipo>
+                        <Id>4</Id>
+                        <Desc>10.5%</Desc>
+                        <FchDesde>20090220</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </IvaTipo>
+                    <IvaTipo>
+                        <Id>5</Id>
+                        <Desc>21%</Desc>
+                        <FchDesde>20090220</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </IvaTipo>
+                    <IvaTipo>
+                        <Id>6</Id>
+                        <Desc>27%</Desc>
+                        <FchDesde>20090220</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </IvaTipo>
+                    <IvaTipo>
+                        <Id>8</Id>
+                        <Desc>5%</Desc>
+                        <FchDesde>20141020</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </IvaTipo>
+                    <IvaTipo>
+                        <Id>9</Id>
+                        <Desc>2.5%</Desc>
+                        <FchDesde>20141020</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </IvaTipo>
+                </ResultGet>
+            </FEParamGetTiposIvaResult>
+        </FEParamGetTiposIvaResponse>
+    </soap:Body>
+</soap:Envelope>

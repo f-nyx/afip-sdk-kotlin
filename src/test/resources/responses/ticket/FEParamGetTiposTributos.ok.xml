@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Header>
+        <FEHeaderInfo xmlns="http://ar.gov.afip.dif.FEV1/">
+            <ambiente>HomologacionExterno - efa</ambiente>
+            <fecha>2021-12-10T12:38:22.7121593-03:00</fecha>
+            <id>4.4.0.0</id>
+        </FEHeaderInfo>
+    </soap:Header>
+    <soap:Body>
+        <FEParamGetTiposTributosResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+            <FEParamGetTiposTributosResult>
+                <ResultGet>
+                    <TributoTipo>
+                        <Id>1</Id>
+                        <Desc>Impuestos nacionales</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>2</Id>
+                        <Desc>Impuestos provinciales</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>3</Id>
+                        <Desc>Impuestos municipales</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>4</Id>
+                        <Desc>Impuestos Internos</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>99</Id>
+                        <Desc>Otro</Desc>
+                        <FchDesde>20100917</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>5</Id>
+                        <Desc>IIBB</Desc>
+                        <FchDesde>20170719</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>6</Id>
+                        <Desc>Percepción de IVA</Desc>
+                        <FchDesde>20170719</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>7</Id>
+                        <Desc>Percepción de IIBB</Desc>
+                        <FchDesde>20170719</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>8</Id>
+                        <Desc>Percepciones por Impuestos Municipales</Desc>
+                        <FchDesde>20170719</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>9</Id>
+                        <Desc>Otras Percepciones</Desc>
+                        <FchDesde>20170719</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                    <TributoTipo>
+                        <Id>13</Id>
+                        <Desc>Percepción de IVA a no Categorizado</Desc>
+                        <FchDesde>20170719</FchDesde>
+                        <FchHasta>NULL</FchHasta>
+                    </TributoTipo>
+                </ResultGet>
+            </FEParamGetTiposTributosResult>
+        </FEParamGetTiposTributosResponse>
+    </soap:Body>
+</soap:Envelope>

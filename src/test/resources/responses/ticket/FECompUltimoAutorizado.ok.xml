@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Header>
+        <FEHeaderInfo xmlns="http://ar.gov.afip.dif.FEV1/">
+            <ambiente>HomologacionExterno - efa</ambiente>
+            <fecha>2021-12-05T21:55:32.5741481-03:00</fecha>
+            <id>4.4.0.0</id>
+        </FEHeaderInfo>
+    </soap:Header>
+    <soap:Body>
+        <FECompUltimoAutorizadoResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+            <FECompUltimoAutorizadoResult>
+                <PtoVta>3</PtoVta>
+                <CbteTipo>11</CbteTipo>
+                <CbteNro>25</CbteNro>
+            </FECompUltimoAutorizadoResult>
+        </FECompUltimoAutorizadoResponse>
+    </soap:Body>
+</soap:Envelope>
