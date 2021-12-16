@@ -3,14 +3,12 @@ package be.rlab.afip.support
 import be.rlab.afip.auth.AuthenticationService
 import org.jsoup.nodes.Document
 
-class TestSoapClient(
-    serviceName: String,
-    endpoint: String,
-    authenticationService: AuthenticationService?
-) : SoapClient(serviceName, endpoint, authenticationService) {
+class TestSoapClient(authenticationService: AuthenticationService?) : SoapClient(authenticationService) {
     companion object {
         fun from(client: SoapClient): TestSoapClient {
-            return TestSoapClient(client.serviceName, client.endpoint, client.authenticationService)
+            return TestSoapClient(client.authenticationService).apply {
+                services += client.services
+            }
         }
     }
 

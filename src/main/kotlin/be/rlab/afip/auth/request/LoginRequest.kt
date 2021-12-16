@@ -1,11 +1,13 @@
 package be.rlab.afip.auth.request
 
+import be.rlab.afip.auth.AuthServiceConfig
 import be.rlab.afip.support.SoapRequest
 
 class LoginRequest(
     internal val ticketPayload: String
 ) : SoapRequest() {
     override val operationName: String = "loginCms"
+    override val serviceName: String = AuthServiceConfig.SERVICE_NAME
 
     override fun build(): String {
         return """

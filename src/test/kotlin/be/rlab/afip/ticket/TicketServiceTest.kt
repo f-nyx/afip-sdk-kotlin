@@ -30,7 +30,7 @@ class TicketServiceTest {
         fun parameterTypesSource(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(ParameterTypeSource("FEParamGetTiposConcepto", TransactionType.all()) { getTransactionTypes() }),
-                Arguments.of(ParameterTypeSource("FEParamGetTiposCbte", TicketType.all()) { getTicketTypes() }),
+//                Arguments.of(ParameterTypeSource("FEParamGetTiposCbte", TicketType.all()) { getTicketTypes() }),
                 Arguments.of(ParameterTypeSource("FEParamGetTiposTributos", TaxType.all()) { getTaxes() }),
                 Arguments.of(ParameterTypeSource("FEParamGetTiposIva", IvaType.all()) { getIvaTypes() }),
                 Arguments.of(ParameterTypeSource("FEParamGetTiposDoc", DocumentType.all()) { getDocumentTypes() }),
@@ -50,13 +50,13 @@ class TicketServiceTest {
         val service = newService(operationName, "ok")
 
         // act
-        assert(service.getLastTicketId(3, TicketType.TICKET_C) == 25)
+        assert(service.getLastTicketId(3, TicketType.TicketC) == 25)
 
         // assert
         val request: LastTicketRequest = getRequest(service, "FECompUltimoAutorizado")
         assert(request.operationName == "FECompUltimoAutorizado")
         assert(request.pointOfSale == 3)
-        assert(request.ticketType == TicketType.TICKET_C)
+        assert(request.ticketType == TicketType.TicketC)
     }
 
     @ParameterizedTest
@@ -103,7 +103,7 @@ class TicketServiceTest {
         }
 
         // act
-        val ticket: Ticket = service.newTicketC(3) {
+        val ticket: Ticket<TicketItem> = service.newTicketC(3) {
             addServiceItem(
                 totalValue = 2000.0,
                 startDate = DateTime.parse("2021-11-15T00:00:00"),
@@ -115,7 +115,7 @@ class TicketServiceTest {
         // assert
         assert(ticket.status == TicketStatus.ACCEPTED)
         assert(ticket.number == 71503980500640)
-        assert(ticket.items[0].transactionType == TransactionType.SERVICES)
+        assert(ticket.items[0].transactionType == TransactionType.Services)
         assert(ticket.items[0].document == Document.new(DocumentType.OTHER, 0))
         assert(ticket.items[0].ticketIdFrom == 26)
         assert(ticket.items[0].ticketIdTo == 26)
@@ -133,7 +133,8 @@ class TicketServiceTest {
         mockCalls: (TestSoapClient.() -> Unit)? = null
     ): TicketService = withClient(
         TicketService(
-            config = TicketServiceConfig.new(Environment.TEST),
+            localConfig = TicketServiceConfig.local(Environment.TEST),
+            exportConfig = TicketServiceConfig.export(Environment.TEST),
             authenticationService = mock()
         )
     ) {

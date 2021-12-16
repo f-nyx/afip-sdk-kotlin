@@ -37,10 +37,10 @@ class AuthenticationServiceTest {
         }
 
         // act
-        val credentials = service.authenticate(TicketServiceConfig.SERVICE_NAME)
+        val credentials = service.authenticate(TicketServiceConfig.LOCAL_SERVICE_NAME)
 
         // assert
-        assert(credentials.serviceName == TicketServiceConfig.SERVICE_NAME)
+        assert(credentials.serviceName == TicketServiceConfig.LOCAL_SERVICE_NAME)
         assert(credentials.cuit == CUIT)
         assert(credentials.source == "CN=wsaahomo, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239")
         assert(credentials.destination == "SERIALNUMBER=CUIT $CUIT, CN=NyxCo")

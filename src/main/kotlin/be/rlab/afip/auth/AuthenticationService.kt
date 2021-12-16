@@ -39,7 +39,9 @@ class AuthenticationService(
         private val logger: Logger = LoggerFactory.getLogger(AuthenticationService::class.java)
     }
 
-    private val client: SoapClient = SoapClient.notAuthenticated(config.serviceName, config.endpoint)
+    private val client: SoapClient = SoapClient.notAuthenticated().apply {
+        registerService(config.serviceName, config.endpoint)
+    }
 
     fun authenticate(serviceName: String): Credentials = credentialsCache.loadIfRequired(serviceName) {
         logger.debug("authentication started for service $serviceName")

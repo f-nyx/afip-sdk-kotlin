@@ -40,7 +40,8 @@ class ServiceProviderConfig {
         return ServiceProvider(
             authenticationService,
             ticketService = TicketService(
-                config = TicketServiceConfig.new(environment),
+                localConfig = TicketServiceConfig.local(environment),
+                exportConfig = TicketServiceConfig.export(environment),
                 authenticationService
             )
         )

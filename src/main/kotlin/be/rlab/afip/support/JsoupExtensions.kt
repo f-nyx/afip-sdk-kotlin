@@ -68,3 +68,8 @@ fun Document.serviceErrors(): List<ServiceError> {
         emptyList()
     }
 }
+
+fun Element.hasContent(cssQuery: String): Boolean {
+    val element = select(cssQuery)
+    return element.text().trim().isNotEmpty()
+}

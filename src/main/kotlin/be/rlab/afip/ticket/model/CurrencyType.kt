@@ -1,6 +1,7 @@
 package be.rlab.afip.ticket.model
 
 /** Enumeration of well-know currencies.
+ * Currency types are the same for both local and export services.
  */
 open class CurrencyType(
     id: String,
@@ -13,7 +14,7 @@ open class CurrencyType(
 
     companion object : ParameterTypeSupport<CurrencyType>() {
         override fun all(): List<CurrencyType> = listOf(
-            ARS, USD, EUR
+            ARS, USD, EUR, USDL
         )
 
         override fun new(id: String, description: String): CurrencyType =

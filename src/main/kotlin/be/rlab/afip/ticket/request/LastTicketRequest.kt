@@ -1,6 +1,7 @@
 package be.rlab.afip.ticket.request
 
 import be.rlab.afip.support.SoapRequest
+import be.rlab.afip.ticket.TicketServiceConfig
 import be.rlab.afip.ticket.model.TicketType
 
 class LastTicketRequest(
@@ -8,6 +9,7 @@ class LastTicketRequest(
     internal val ticketType: TicketType
 ) : SoapRequest() {
     override val operationName: String = "FECompUltimoAutorizado"
+    override val serviceName: String = TicketServiceConfig.LOCAL_SERVICE_NAME
 
     override fun build(): String {
         return """

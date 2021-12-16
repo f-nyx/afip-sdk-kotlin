@@ -4,21 +4,21 @@ import be.rlab.afip.support.ServiceError
 
 /** Represents an issued ticket.
  */
-data class Ticket(
+data class Ticket<T>(
     /** Ticket number, available only if the status is [TicketStatus.ACCEPTED]. */
     val number: Long?,
     val status: TicketStatus,
-    val items: List<TicketItem>,
+    val items: List<T>,
     val remarks: List<Remark>,
     val errors: List<ServiceError>
 ) {
     companion object {
-        fun accepted(
+        fun<T> accepted(
             number: Long,
-            items: List<TicketItem>,
+            items: List<T>,
             remarks: List<Remark>,
             errors: List<ServiceError>
-        ): Ticket = Ticket(
+        ): Ticket<T> = Ticket(
             number = number,
             status = TicketStatus.ACCEPTED,
             items = items,
@@ -26,11 +26,11 @@ data class Ticket(
             errors = errors
         )
 
-        fun rejected(
-            items: List<TicketItem>,
+        fun<T> rejected(
+            items: List<T>,
             remarks: List<Remark>,
             errors: List<ServiceError>
-        ): Ticket = Ticket(
+        ): Ticket<T> = Ticket(
             number = null,
             status = TicketStatus.REJECTED,
             items = items,

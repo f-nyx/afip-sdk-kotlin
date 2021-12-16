@@ -47,7 +47,7 @@ data class TicketItem(
     val totalValue: Double get() = netValueWithoutTaxes + netValue + exemptValue + totalIva + totalTaxes
 
     companion object {
-        /** Creates an item for [TicketType.TICKET_C] tickets.
+        /** Creates an item for [TicketType.TicketC] tickets.
          * @param transactionType Transaction type.
          * @param ticketId Id of the ticket to create for this item.
          * @param issuedAt Date and time the operation occurred.
@@ -69,8 +69,8 @@ data class TicketItem(
             paymentDueDate: DateTime? = null,
             currencyType: CurrencyType = CurrencyType.ARS
         ): TicketItem {
-            val isService = transactionType == TransactionType.SERVICES
-                || transactionType == TransactionType.PRODUCTS_AND_SERVICES
+            val isService = transactionType == TransactionType.Services
+                || transactionType == TransactionType.ProductsAndServices
             val validServiceFields: Boolean = serviceStartDate != null
                 && serviceEndDate != null
                 && paymentDueDate != null

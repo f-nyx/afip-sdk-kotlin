@@ -13,16 +13,21 @@ import be.rlab.afip.auth.model.Credentials
 abstract class SoapRequest {
     private var credentials: Credentials? = null
     abstract val operationName: String
+    abstract val serviceName: String
 
-    protected val authHeader: String get() = credentials?.let {
-        """
+    protected val authHeader: String get() = authHeader { "" }
+
+    protected fun authHeader(proxy: () -> String): String {
+        return credentials?.let { """
          <ar:Auth>
             <ar:Token>${credentials?.token}</ar:Token>
             <ar:Sign>${credentials?.sign}</ar:Sign>
             <ar:Cuit>${credentials?.cuit}</ar:Cuit>
+            ${proxy()}
          </ar:Auth>
-        """.trimIndent()
-    } ?: ""
+        """.trimIndent() } ?: ""
+    }
+
 
     /** Builds the HTTP request.
      * @return the raw HTTP payload.

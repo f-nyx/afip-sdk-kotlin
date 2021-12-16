@@ -1,6 +1,7 @@
 package be.rlab.afip.ticket.request
 
 import be.rlab.afip.support.SoapRequest
+import be.rlab.afip.ticket.TicketServiceConfig
 import be.rlab.afip.ticket.model.TicketItem
 import be.rlab.afip.ticket.model.TicketType
 import org.joda.time.format.DateTimeFormat
@@ -8,24 +9,14 @@ import org.joda.time.format.DateTimeFormat
 /** This request issues a ticket.
  */
 class CreateTicketRequest(
-    val pointOfSaleId: Int,
-    val ticketType: TicketType,
-    val items: List<TicketItem>
+    private val pointOfSaleId: Int,
+    private val ticketType: TicketType,
+    private val items: List<TicketItem>
 ) : SoapRequest() {
     private val formatter = DateTimeFormat.forPattern("yyyyMMdd")
 
-    companion object {
-        fun ticketC(
-            pointOfSaleId: Int,
-            items: List<TicketItem>
-        ): CreateTicketRequest = CreateTicketRequest(
-            pointOfSaleId = pointOfSaleId,
-            ticketType = TicketType.TICKET_C,
-            items = items
-        )
-    }
-
     override val operationName: String = "FECAESolicitar"
+    override val serviceName: String = TicketServiceConfig.LOCAL_SERVICE_NAME
 
     override fun build(): String {
         return """
