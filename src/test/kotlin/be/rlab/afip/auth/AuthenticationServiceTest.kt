@@ -3,7 +3,7 @@ package be.rlab.afip.auth
 import be.rlab.afip.auth.request.LoginRequest
 import be.rlab.afip.config.Environment
 import be.rlab.afip.support.ServiceTestSupport.getRequest
-import be.rlab.afip.support.ServiceTestSupport.withClient
+import be.rlab.afip.support.TestSoapClient
 import be.rlab.afip.support.store.FileSystemObjectStore
 import be.rlab.afip.ticket.TicketServiceConfig
 import org.bouncycastle.cms.CMSSignedData
@@ -30,7 +30,7 @@ class AuthenticationServiceTest {
     @Test
     fun authenticate() {
         // prepare
-        val service = withClient(createAuthenticationService()) {
+        val service = createAuthenticationService {
             mockCall("loginCms") {
                 loadResponse(SERVICE_NAME, "ok")
             }
@@ -59,11 +59,17 @@ class AuthenticationServiceTest {
         assert(validSignature)
     }
 
-    private fun createAuthenticationService(): AuthenticationService {
+    private fun createAuthenticationService(initClient: TestSoapClient.() -> Unit): AuthenticationService {
+        val config = AuthServiceConfig.new(Environment.TEST, cuit = CUIT)
+        val client = TestSoapClient(authenticationService = null).apply {
+            registerService(config.serviceName, config.endpoint)
+            initClient()
+        }
         return AuthenticationService(
-            config = AuthServiceConfig.new(Environment.TEST, cuit = CUIT),
+            config = config,
             credentialsCache = CredentialsCache(store, enabled = false),
-            secretsProvider = secretsProvider
+            secretsProvider = secretsProvider,
+            client = client
         )
     }
 }

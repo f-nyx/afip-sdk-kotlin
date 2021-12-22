@@ -2,7 +2,6 @@ package be.rlab.afip.ticket
 
 import be.rlab.afip.config.Environment
 import be.rlab.afip.support.ServiceTestSupport.getRequest
-import be.rlab.afip.support.ServiceTestSupport.withClient
 import be.rlab.afip.support.TestSoapClient
 import be.rlab.afip.ticket.model.*
 import be.rlab.afip.ticket.request.LastTicketRequest
@@ -131,15 +130,17 @@ class TicketServiceTest {
         operationName: String,
         responseName: String? = null,
         mockCalls: (TestSoapClient.() -> Unit)? = null
-    ): TicketService = withClient(
-        TicketService(
-            localConfig = TicketServiceConfig.local(Environment.TEST),
-            exportConfig = TicketServiceConfig.export(Environment.TEST),
-            authenticationService = mock()
-        )
-    ) {
-        mockCalls?.invoke(this) ?: mockCall(operationName) {
-            loadResponse(SERVICE_NAME, responseName!!)
+    ): TicketService {
+        val client = TestSoapClient(mock()).apply {
+            val localConfig = TicketServiceConfig.local(Environment.TEST)
+            val exportConfig = TicketServiceConfig.export(Environment.TEST)
+            registerService(localConfig.serviceName, localConfig.endpoint, localConfig.soapActionBase)
+            registerService(exportConfig.serviceName, exportConfig.endpoint, exportConfig.soapActionBase)
+
+            mockCalls?.invoke(this) ?: mockCall(operationName) {
+                loadResponse(SERVICE_NAME, responseName!!)
+            }
         }
+        return TicketService(client)
     }
 }

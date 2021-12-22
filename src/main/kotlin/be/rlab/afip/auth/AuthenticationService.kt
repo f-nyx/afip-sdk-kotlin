@@ -29,18 +29,16 @@ import java.util.*
  * @see https://www.afip.gob.ar/ws/WSAA/Especificacion_Tecnica_WSAA_1.2.2.pdf
  */
 class AuthenticationService(
+    private val credentialsCache: CredentialsCache,
+    private val secretsProvider: SecretsProvider,
     /** Authentication service configuration. */
     private val config: AuthServiceConfig,
-    private val credentialsCache: CredentialsCache,
-    private val secretsProvider: SecretsProvider
+    /** Configured client for this service. */
+    private val client: SoapClient
 ) {
     companion object {
         const val BC_PROVIDER = "BC"
         private val logger: Logger = LoggerFactory.getLogger(AuthenticationService::class.java)
-    }
-
-    private val client: SoapClient = SoapClient.notAuthenticated().apply {
-        registerService(config.serviceName, config.endpoint)
     }
 
     fun authenticate(serviceName: String): Credentials = credentialsCache.loadIfRequired(serviceName) {

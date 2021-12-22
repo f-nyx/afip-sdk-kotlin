@@ -2,6 +2,7 @@ package be.rlab.afip
 
 import be.rlab.afip.auth.AuthenticationService
 import be.rlab.afip.auth.TestSecretsProvider
+import be.rlab.afip.cert.Login
 import be.rlab.afip.config.Environment
 import be.rlab.afip.support.store.FileSystemObjectStore
 import be.rlab.afip.ticket.TicketService

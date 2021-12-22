@@ -1,6 +1,5 @@
 package be.rlab.afip.ticket
 
-import be.rlab.afip.auth.AuthenticationService
 import be.rlab.afip.support.*
 import be.rlab.afip.ticket.model.*
 import be.rlab.afip.ticket.request.GetCurrencyValuesRequest
@@ -13,19 +12,7 @@ import org.joda.time.DateTime
  *
  * @see https://www.afip.gob.ar/fe/ayuda/documentos/Manual-desarrollador-V.2.21.pdf
  */
-class TicketService(
-    /** Configuration for the wsfe service. */
-    localConfig: TicketServiceConfig,
-    /** Configuration for the wsfex service. */
-    exportConfig: TicketServiceConfig,
-    /** Authentication service required to authorize requests. */
-    authenticationService: AuthenticationService
-) {
-    private val client: SoapClient = SoapClient.authenticated(authenticationService).apply {
-        registerService(localConfig.serviceName, localConfig.endpoint, localConfig.soapActionBase)
-        registerService(exportConfig.serviceName, exportConfig.endpoint, exportConfig.soapActionBase)
-    }
-
+class TicketService(private val client: SoapClient) {
     /** Creates a new ticket of type [TicketType.TicketC] for the specified point of sale.
      * @param pointOfSaleId Id of the point of sale to create the ticket for.
      * @param build Callback to build the ticket information.
@@ -60,7 +47,7 @@ class TicketService(
         }
     }
 
-    /** Creates a new ticket of type [TicketType.TicketC] for the specified point of sale.
+    /** Creates a new ticket of type [TicketType.TicketE] for the specified point of sale.
      * @param pointOfSaleId Id of the point of sale to create the ticket for.
      * @param build Callback to build the ticket information.
      * @return the new ticket.

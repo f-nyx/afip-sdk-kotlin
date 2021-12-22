@@ -5,6 +5,7 @@ import be.rlab.afip.auth.AuthServiceConfig
 import be.rlab.afip.auth.AuthenticationService
 import be.rlab.afip.auth.CredentialsCache
 import be.rlab.afip.auth.SecretsProvider
+import be.rlab.afip.support.SoapClient
 import be.rlab.afip.ticket.TicketService
 import be.rlab.afip.ticket.TicketServiceConfig
 
@@ -31,18 +32,27 @@ class ServiceProviderConfig {
         val store = lazyStoreConfig().build()
         val secretsProviderConfig = lazySecretsProviderConfig()
         val secretsProvider: SecretsProvider = secretsProviderConfig.build()
+        val authConfig = AuthServiceConfig.new(environment, secretsProviderConfig.cuit)
         val authenticationService = AuthenticationService(
-            config = AuthServiceConfig.new(environment, secretsProviderConfig.cuit),
             credentialsCache = CredentialsCache(store),
-            secretsProvider = secretsProvider
+            secretsProvider = secretsProvider,
+            config = authConfig,
+            client = SoapClient.notAuthenticated().apply {
+                registerService(authConfig.serviceName, authConfig.endpoint)
+            }
         )
 
         return ServiceProvider(
             authenticationService,
             ticketService = TicketService(
-                localConfig = TicketServiceConfig.local(environment),
-                exportConfig = TicketServiceConfig.export(environment),
-                authenticationService
+                client = SoapClient.authenticated(authenticationService).apply {
+                    /** Configuration for the wsfe service. */
+                    val localConfig = TicketServiceConfig.local(environment)
+                    /** Configuration for the wsfex service. */
+                    val exportConfig = TicketServiceConfig.export(environment)
+                    registerService(localConfig.serviceName, localConfig.endpoint, localConfig.soapActionBase)
+                    registerService(exportConfig.serviceName, exportConfig.endpoint, exportConfig.soapActionBase)
+                }
             )
         )
     }
