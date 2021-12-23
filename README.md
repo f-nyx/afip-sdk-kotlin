@@ -99,7 +99,64 @@ secretsProvider {
 
 ## Electronic Ticket
 
-TBD
+The [TicketService](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/ticket/TicketService.kt)
+provides access to both
+[wsfe](https://www.afip.gob.ar/fe/ayuda//documentos/Manual-desarrollador-V.2.21.pdf) and
+[wsfex](https://www.afip.gob.ar/fe/documentos/WSFEX-Manualparaeldesarrollador_V1_9.pdf) AFIP services. You can get a
+reference to the service via the Service Provider:
+
+```kotlin
+val ticketService: TicketService = serviceProvider.getService()
+```
+
+The following sections will describe the supported operations. You might also take a look at the 
+[service integration test](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/test/kotlin/be/rlab/afip/ticket/TicketServiceIntegrationTest.kt)
+
+### Create Ticket C
+
+Create a ticket of type C for a service:
+
+```kotlin
+val now = DateTime.now()
+val pointOfSale: Int = 3
+
+// act
+val ticket: Ticket<TicketItem> = ticketService.newTicketC(pointOfSale) {
+    addServiceItem(
+        totalValue = 2000.0,
+        startDate = now.minusDays(15),
+        endDate = now.plusDays(15),
+        paymentDueDate = now.plusDays(25)
+    )
+}
+
+println(ticket)
+```
+
+Create ticket of type E for an export service:
+
+```kotlin
+val pointOfSale: Int = 3
+
+val ticket: Ticket<ExportTicketItem> = ticketService.newTicketE(pointOfSale) {
+    exportRecipient(
+        customerFullName = "John Smith",
+        customerFullAddress = "P Sherman Calle Wallaby 235",
+        customerLegalId = "12345678",
+        customerType = EntityType.INDIVIDUAL,
+        targetLocation = Location.UnitedStates,
+        language = Language.English,
+        paymentMethod = "Wire Transfer"
+    )
+    addExportServiceItem(
+        code = "ABC123",
+        description = "Software Development Services",
+        totalValue = 1000.0
+    )
+}
+
+println(ticket)
+```
 
 ## How certificates work
 

@@ -11,6 +11,7 @@ import org.joda.time.DateTime
 /** This service issues AFIP tickets.
  *
  * @see https://www.afip.gob.ar/fe/ayuda/documentos/Manual-desarrollador-V.2.21.pdf
+ * @see https://www.afip.gob.ar/fe/documentos/WSFEX-Manualparaeldesarrollador_V1_9.pdf
  */
 class TicketService(private val client: SoapClient) {
     /** Creates a new ticket of type [TicketType.TicketC] for the specified point of sale.
