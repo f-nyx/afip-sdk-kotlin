@@ -1,6 +1,6 @@
 package be.rlab.afip.support.store
 
-/** Object store that stores data in memory for tes purposes.
+/** Object store that stores data in memory for testing purposes.
  */
 class InMemoryObjectStore : ObjectStore {
 

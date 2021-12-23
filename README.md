@@ -36,7 +36,7 @@ val serviceProvider = ServiceProvider.new {
 The SDK uses a general purpose [ObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/ObjectStore.kt)
 to cache credentials and save the secrets. The `store { }` block in the ServiceProvider builder allows configuring
 the ObjectStore implementation. This SDK provides two object stores out of the box: a
-[FileSystemObject](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/FileSystemObjectStore.kt) store and
+[FileSystemObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/FileSystemObjectStore.kt) store and
 a [MemoryObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/InMemoryObjectStore.kt).
 The `FileSystemObjectStore` uses a directory to store data serialized as JSON.
 
@@ -53,12 +53,77 @@ val ticketService: TicketService = serviceProvider.getService()
 println(ticketService.getCurrencyTypes())
 ```
 
-Look at the [Electronic Ticket](electronic-ticket) section for further information.
+Look at the [Electronic Ticket](#electronic-ticket) section for further information.
 
 ## Authentication
 
-TBD
+The authentication to AFIP services requires a certificate issued by the AFIP. The certificate is used to sign the
+SOAP requests. A cryptographic signature allows to identify a subject. The certificate has information
+associated to a person or entity (subject) like the CUIT, application name, and company name. So, signing a request
+allows the services to verify that it comes from a single real subject. This section assumes you are familiar
+with certificates, if not, please take a look at [how certificates work](#how-certificates-work) first.
+
+In our case the AFIP is the Certificate Authority. So, we need to generate the CSR required by the AFIP to issue
+the certificate. The AFIP provides two environments: testing (homologacion) and production (produccion). You need to
+generate a certificate for each environment. You can use the same CSR to generate both certificates, but we strongly
+recommend having a single public/private key pair and CSR for each environment.
+
+This library works with a key store containing both the public/private key pair and the certificate. The following
+steps describe the process to create the required objects:
+
+1. Create the public/private key pair
+2. Create the CSR required by the AFIP to issue the certificate
+3. Generate the certificate in the AFIP system using the CSR
+4. Save the key pair and the certificate in a key store
+
+This SDK comes with a
+[Certificate Manager](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/CertificateManager.kt)
+component that creates and saves all the required objects. You can take a look at
+[this test file](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/test/kotlin/be/rlab/afip/support/CertificateManagerTest.kt).
+It has two tests: one to create they key pair and the CSR, and another to load the generated certificate and save it
+into the Certificate Manager. You just need to configure your information in the constants defined in the companion
+object.
+
+Once loaded into the Certificate Manager, you can build the Service Provider using this component. Take into
+account that the key store name must be the same you used in the test. The file system store directory must be
+also the same directory you configured in the test.
+
+```kotlin
+secretsProvider {
+    cuit = CUIT
+    alias = ALIAS
+    password = PASSWORD
+    certificateManager { keyStoreName = "afip.keyStore" }
+}
+```
 
 ## Electronic Ticket
 
 TBD
+
+## How certificates work
+
+As we mentioned earlier in this document, a cryptographic signature allows to identify a subject. Certificates
+are used to **sign** data so any entity can verify that the data comes from the subject that claims ownership.
+
+**The certificates have a hierarchy**. A certificate X can be used to _sign_ another certificate Y. It means
+the certificate X will validate the Y authenticity. This hierarchy of verified certificates is usually call a
+_certificate chain_.
+
+The entity that owns the certificate X used to sign the certificate Y is called **Certificate Authority or CA**. We
+say that the CA _issues_ a certificate when it creates the certificate Y signed with X. A certificate contains a
+subject identity (i.e.: name, email, company name, etc.). Signing a certificate means certifying the identity and the
+ownership of a public key by the subject of the certificate Y.
+
+The CA needs a [Certificate Signing Request (CSR)](https://en.wikipedia.org/wiki/Certificate_signing_request) to
+issue a certificate. The CSR usually contains the public key for which the certificate should be issued, identifying
+information (such as a domain name) and integrity protection (e.g., a digital signature). This is all the information
+the CA needs to create the certificate Y.
+
+The last piece that we need is a public/private key pairs. This project uses RSA keys of 4096 bits. The keys are
+used in several operations to sign and verify data. For instance, the private key is used to sign the CSR, so the CA
+can verify the signature using the public key within the CSR.
+
+Finally, to put everything together, we need to store the certificate and the public/private keys in a **key store**.
+A key store supports securely saving cryptographic objects. It is possible to set a password to decrypt the file
+content or even retrieve an object. This project supports the standard PFX/PKCS#12 key store format.

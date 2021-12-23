@@ -57,6 +57,10 @@ class CertificateManagerTest {
         /** [KeyStore] password.
          */
         private const val PASSWORD: String = "Test123"
+
+        /** Name of the [KeyStore] in the [CertificateManager].
+         */
+        private const val KEY_STORE_NAME: String = "afip.keyStore"
     }
 
     private lateinit var manager: CertificateManager
@@ -102,8 +106,8 @@ class CertificateManagerTest {
         val publicKey: PublicKey = manager.load("afip.publicKey")
         val keyPair = KeyPair(publicKey, privateKey)
 
-        manager.saveKeyStore("afip.keyStore", ALIAS, PASSWORD, keyPair, cert)
-        manager.loadKeyStore("afip.keyStore", PASSWORD)
+        manager.saveKeyStore(KEY_STORE_NAME, ALIAS, PASSWORD, keyPair, cert)
+        manager.loadKeyStore(KEY_STORE_NAME, PASSWORD)
 
         println(
             "RSA key pairs and certificate successfully added to the protected KeyStore and saved to internal storage"
