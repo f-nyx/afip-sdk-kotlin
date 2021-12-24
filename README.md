@@ -9,7 +9,17 @@ The current version supports the following services:
 
 ## Getting started
 
-You need to initialize a ServiceProvider that will give you access to supported services.
+This library is available in Maven Central. Add this dependency to your project:
+
+```xml
+<dependency>
+    <groupId>be.rlab.afip</groupId>
+    <artifactId>afip-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+Then you need to initialize a ServiceProvider that will give you access to supported services.
 
 ```kotlin
 companion object {
