@@ -1,11 +1,12 @@
 # AFIP SDK
 
-This library provides easy access to the [AFIP](https://www.afip.gob.ar) web services.
+This library provides easy access to the [AFIP](https://www.afip.gob.ar) applications and web services.
 
 The current version supports the following services:
 
 * Electronic tickets ([wsfe](https://www.afip.gob.ar/fe/ayuda//documentos/Manual-desarrollador-V.2.21.pdf))
 * Export electronic tickets ([wsfex](https://www.afip.gob.ar/fe/documentos/WSFEX-Manualparaeldesarrollador_V1_9.pdf))
+* Certificate manager for testing ([wsass](https://wsass-homo.afip.gob.ar/wsass/portal/main.aspx))
 
 ## Getting started
 
@@ -19,7 +20,7 @@ This library is available in Maven Central. Add this dependency to your project:
 </dependency>
 ```
 
-Then you need to initialize a ServiceProvider that will give you access to supported services.
+Then you need to initialize a ServiceProvider that will give you access to the supported services.
 
 ```kotlin
 companion object {
@@ -40,14 +41,18 @@ val serviceProvider = ServiceProvider.new {
         password = PASSWORD
         fileSystem { keyStoreFile = File(KEY_STORE_FILE) }
     }
+    portal {
+        cuit = CUIT
+        password = PASSWORD
+    }
 }
 ```
 
 The SDK uses a general purpose [ObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/ObjectStore.kt)
-to cache credentials and save the secrets. The `store { }` block in the ServiceProvider builder allows configuring
-the ObjectStore implementation. This SDK provides two object stores out of the box: a
-[FileSystemObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/FileSystemObjectStore.kt) store and
-a [MemoryObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/InMemoryObjectStore.kt).
+to cache credentials and save the secrets. The `store { }` block in the ServiceProvider builder configures
+the ObjectStore implementation. This SDK provides two object stores out of the box: 
+[FileSystemObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/FileSystemObjectStore.kt) and
+[MemoryObjectStore](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/main/kotlin/be/rlab/afip/support/store/InMemoryObjectStore.kt).
 The `FileSystemObjectStore` uses a directory to store data serialized as JSON.
 
 The `secretsProvider { }` block configures the certificate required to authenticate the AFIP services. Both
@@ -119,8 +124,8 @@ reference to the service via the Service Provider:
 val ticketService: TicketService = serviceProvider.getService()
 ```
 
-The following sections will describe the supported operations. You might also take a look at the 
-[service integration test](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/test/kotlin/be/rlab/afip/ticket/TicketServiceIntegrationTest.kt)
+The following sections will describe the supported operations. You can also take a look at the 
+[service integration test](https://github.com/f-nyx/afip-sdk-kotlin/blob/main/src/test/kotlin/be/rlab/afip/ticket/TicketServiceIntegrationTest.kt).
 
 ### Create Ticket C
 

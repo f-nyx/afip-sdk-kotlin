@@ -1,5 +1,7 @@
 package be.rlab.afip.support.store
 
+import kotlin.reflect.KProperty
+
 /** General-purpose object store.
  * The implementation decides the storage device and format.
  * It provides consistent read and write. Implementations must be thread-safe.
@@ -38,4 +40,27 @@ interface ObjectStore {
      * @return true if the object exists, false otherwise.
      */
     fun exists(id: String): Boolean
+
+    fun<T : Any> item(
+        itemId: String,
+        defaultValue: T
+    ) = ItemResolver(
+        store = this,
+        itemId = itemId,
+        defaultValue = defaultValue
+    )
+
+    class ItemResolver(
+        val store: ObjectStore,
+        val itemId: String,
+        val defaultValue: Any
+    ) {
+        inline operator fun <reified T : Any> getValue(thisRef: Any?, property: KProperty<*>): T {
+            return (store.read<T>(itemId)?.content ?: defaultValue) as T
+        }
+
+        inline operator fun <reified T : Any> setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+            store.save(itemId, value)
+        }
+    }
 }

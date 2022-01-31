@@ -1,10 +1,12 @@
 package be.rlab.afip.config
 
 import be.rlab.afip.ServiceProvider
+import be.rlab.afip.apps.AppsService
 import be.rlab.afip.auth.AuthServiceConfig
 import be.rlab.afip.auth.AuthenticationService
 import be.rlab.afip.auth.CredentialsCache
 import be.rlab.afip.auth.SecretsProvider
+import be.rlab.afip.portal.PortalService
 import be.rlab.afip.support.SoapClient
 import be.rlab.afip.ticket.TicketService
 import be.rlab.afip.ticket.TicketServiceConfig
@@ -13,6 +15,7 @@ class ServiceProviderConfig {
     private var environment: Environment = Environment.TEST
     private lateinit var lazyStoreConfig: () -> StoreConfig
     private lateinit var lazySecretsProviderConfig: () -> SecretsProviderConfig
+    private var lazyPortalConfig: (() -> PortalConfig)? = null
 
     fun environment(callback: () -> Environment) {
         environment = callback()
@@ -25,6 +28,12 @@ class ServiceProviderConfig {
     fun secretsProvider(callback: SecretsProviderConfig.() -> Unit) {
         lazySecretsProviderConfig = {
             SecretsProviderConfig(lazyStoreConfig()).apply(callback)
+        }
+    }
+
+    fun portal(callback: PortalConfig.() -> Unit) {
+        lazyPortalConfig = {
+            PortalConfig(lazyStoreConfig()).apply(callback)
         }
     }
 
@@ -41,10 +50,17 @@ class ServiceProviderConfig {
                 registerService(authConfig.serviceName, authConfig.endpoint)
             }
         )
+        val portalServices: List<Any> = lazyPortalConfig?.let { builder ->
+            val portalConfig: PortalConfig = builder()
+            listOf(
+                portalConfig.build(),
+                AppsService(portalConfig.build())
+            )
+        } ?: emptyList()
 
-        return ServiceProvider(
+        val services: List<Any> = portalServices + listOf(
             authenticationService,
-            ticketService = TicketService(
+            TicketService(
                 client = SoapClient.authenticated(authenticationService).apply {
                     /** Configuration for the wsfe service. */
                     val localConfig = TicketServiceConfig.local(environment)
@@ -55,5 +71,7 @@ class ServiceProviderConfig {
                 }
             )
         )
+
+        return ServiceProvider(services)
     }
 }

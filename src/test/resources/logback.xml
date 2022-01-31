@@ -13,6 +13,7 @@
 
     <logger name="okhttp3" level="ERROR" />
     <logger name="jdk.event.security" level="ERROR" />
+    <logger name="org.jsoup" level="DEBUG" />
 
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />

@@ -11,16 +11,16 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 object ObjectMapperFactory {
 
     val snakeCaseMapper: ObjectMapper = defaultObjectMapper()
-        .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE )
+        .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
 
-    val anySupportMapper: ObjectMapper = snakeCaseMapper
+    val anySupportMapper: ObjectMapper = snakeCaseMapper.copy()
         .activateDefaultTypingAsProperty(
             BasicPolymorphicTypeValidator.builder()
                 .allowIfBaseType(Any::class.java)
                 .build()
             , ObjectMapper.DefaultTyping.EVERYTHING, "_type")
 
-    private fun defaultObjectMapper(): ObjectMapper {
+    fun defaultObjectMapper(): ObjectMapper {
         return configure(ObjectMapper())
     }
 
