@@ -361,6 +361,14 @@
         </repository>
     </distributionManagement>
 
+    <!-- SCM -->
+    <scm>
+        <connection>scm:git:git@github.com:f-nyx/afip-sdk-kotlin.git</connection>
+        <developerConnection>scm:git:git@github.com:f-nyx/afip-sdk-kotlin.git</developerConnection>
+        <url>https://github.com/f-nyx/afip-sdk-kotlin</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <profiles>
         <!-- GPG Signature on release -->
         <profile>
