@@ -49,6 +49,7 @@
         <slf4j.all.version>2.0.12</slf4j.all.version>
         <logback-classic.version>1.5.3</logback-classic.version>
         <jackson.mapper.version>2.16.2</jackson.mapper.version>
+        <dokka.version>1.8.20</dokka.version>
 
         <java.version>17</java.version>
         <kotlin.version>1.9.23</kotlin.version>
@@ -384,7 +385,7 @@
                     <plugin>
                         <groupId>org.jetbrains.dokka</groupId>
                         <artifactId>dokka-maven-plugin</artifactId>
-                        <version>1.5.0</version>
+                        <version>${dokka.version}</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
