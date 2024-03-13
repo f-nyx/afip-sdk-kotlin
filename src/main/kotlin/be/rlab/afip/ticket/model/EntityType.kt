@@ -8,6 +8,6 @@ enum class EntityType(val description: String) {
     companion object {
         fun of(description: String): EntityType = values().find { entityType ->
             entityType.description == description
-        } ?: throw RuntimeException("entity type not found: $description")
+        } ?: INDIVIDUAL
     }
 }

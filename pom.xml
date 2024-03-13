@@ -5,7 +5,7 @@
     <groupId>be.rlab.afip</groupId>
     <artifactId>afip-sdk</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <description>
         This project provides an API to access the AFIP web services.
     </description>
@@ -38,21 +38,20 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <owasp.phase>verify</owasp.phase>
 
-        <junit-jupiter.version>5.8.2</junit-jupiter.version>
-        <assertj.version>3.21.0</assertj.version>
-        <mockito.version>4.1.0</mockito.version>
-        <mockito-kotlin.version>2.2.0</mockito-kotlin.version>
-        <bytebuddy.version>1.12.3</bytebuddy.version>
-        <joda.version>2.10.13</joda.version>
-        <okhttp.version>4.9.3</okhttp.version>
-        <bouncycastle.version>1.69</bouncycastle.version>
-        <jsoup.version>1.14.3</jsoup.version>
-        <slf4j.all.version>1.7.32</slf4j.all.version>
-        <logback-classic.version>1.2.8</logback-classic.version>
-        <jackson.mapper.version>2.13.0</jackson.mapper.version>
+        <junit-jupiter.version>5.10.2</junit-jupiter.version>
+        <assertj.version>3.25.3</assertj.version>
+        <mockito.version>5.11.0</mockito.version>
+        <mockito-kotlin.version>5.2.1</mockito-kotlin.version>
+        <joda.version>2.12.7</joda.version>
+        <okhttp.version>4.12.0</okhttp.version>
+        <bouncycastle.version>1.77</bouncycastle.version>
+        <jsoup.version>1.17.2</jsoup.version>
+        <slf4j.all.version>2.0.12</slf4j.all.version>
+        <logback-classic.version>1.5.3</logback-classic.version>
+        <jackson.mapper.version>2.16.2</jackson.mapper.version>
 
-        <java.version>1.8</java.version>
-        <kotlin.version>1.6.10</kotlin.version>
+        <java.version>17</java.version>
+        <kotlin.version>1.9.23</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
     </properties>
 
@@ -60,7 +59,7 @@
         <!-- Kotlin -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
 
@@ -109,25 +108,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy</artifactId>
-            <version>${bytebuddy.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy-agent</artifactId>
-            <version>${bytebuddy.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.nhaarman.mockitokotlin2</groupId>
+            <groupId>org.mockito.kotlin</groupId>
             <artifactId>mockito-kotlin</artifactId>
             <version>${mockito-kotlin.version}</version>
             <scope>test</scope>
@@ -168,12 +149,12 @@
         <!-- Required to generate SOAP requests. -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
+            <artifactId>bcprov-jdk18on</artifactId>
             <version>${bouncycastle.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcmail-jdk15on</artifactId>
+            <artifactId>bcmail-jdk18on</artifactId>
             <version>${bouncycastle.version}</version>
         </dependency>
         <dependency>
@@ -202,25 +183,21 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.mapper.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.mapper.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
             <version>${jackson.mapper.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
             <version>${jackson.mapper.version}</version>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>joda-time</groupId>
@@ -244,40 +221,8 @@
 
     <build>
         <finalName>afip-sdk</finalName>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>java-compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>java-test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -309,7 +254,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <jvmTarget>${java.version}</jvmTarget>
                 </configuration>
             </plugin>
             <plugin>
@@ -415,25 +360,6 @@
             </url>
         </repository>
     </distributionManagement>
-
-    <!-- Repositories -->
-    <repositories>
-        <repository>
-            <id>kotlin-eap</id>
-            <name>Kotlin EAP Repository</name>
-            <url>http://dl.bintray.com/kotlin/kotlin-eap</url>
-        </repository>
-        <repository>
-            <id>jcenter</id>
-            <name>JCenter Repository</name>
-            <url>https://jcenter.bintray.com</url>
-        </repository>
-        <repository>
-            <id>jitpack</id>
-            <name>JitPack Repository</name>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
 
     <profiles>
         <!-- GPG Signature on release -->

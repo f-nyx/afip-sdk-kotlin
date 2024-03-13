@@ -6,7 +6,7 @@ import be.rlab.afip.support.TestSoapClient
 import be.rlab.afip.ticket.model.*
 import be.rlab.afip.ticket.request.LastTicketRequest
 import be.rlab.afip.ticket.request.ParameterTypeRequest
-import com.nhaarman.mockitokotlin2.mock
+import org.mockito.kotlin.mock
 import org.joda.time.DateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

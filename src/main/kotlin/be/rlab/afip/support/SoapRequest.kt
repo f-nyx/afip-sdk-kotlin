@@ -11,7 +11,7 @@ import be.rlab.afip.auth.model.Credentials
  * building the request.
  */
 abstract class SoapRequest {
-    private var credentials: Credentials? = null
+    protected var credentials: Credentials? = null
     abstract val operationName: String
     abstract val serviceName: String
 

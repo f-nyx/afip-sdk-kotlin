@@ -111,10 +111,10 @@ class CreateTicketRequestBuilder(
         requireNotNull(exportRecipient) { "No recipient configured, look at exportRecipient()" }
 
         return exportRecipient?.let { recipient ->
-            val locationEntity = ticketService.getLocationEntities().single { locationEntity ->
+            val locationEntity = ticketService.getLocationEntities().first { locationEntity ->
                 locationEntity.location == recipient.targetLocation && locationEntity.type == recipient.customerType
             }
-            val currency = ticketService.getCurrencyValues(recipient.paymentDate).single { currencyValue ->
+            val currency = ticketService.getCurrencyValues(recipient.paymentDate).first { currencyValue ->
                 currencyValue.currency == recipient.currencyType
             }
             val ticketId = nextTicketId

@@ -25,9 +25,22 @@ fun Element.string(cssQuery: String): String {
     return text
 }
 
+fun Element.optString(cssQuery: String): String? {
+    val element = select(cssQuery)
+    val text = element.text()
+    return text.takeIf { it.isNotEmpty() }
+}
+
 fun Element.number(cssQuery: String): Number {
     val formatter = NumberFormat.getNumberInstance()
     return formatter.parse(string(cssQuery))
+}
+
+fun Element.optNumber(cssQuery: String): Number? {
+    val formatter = NumberFormat.getNumberInstance()
+    return optString(cssQuery)?.let { value ->
+        formatter.parse(value)
+    }
 }
 
 fun Element.dateTime(
@@ -35,6 +48,15 @@ fun Element.dateTime(
     formatter: DateTimeFormatter = ISODateTimeFormat.dateTime()
 ): DateTime {
     return DateTime.parse(string(cssQuery), formatter)
+}
+
+fun Element.optDateTime(
+    cssQuery: String,
+    formatter: DateTimeFormatter = ISODateTimeFormat.dateTime()
+): DateTime? {
+    return optString(cssQuery)?.let {
+        DateTime.parse(it, formatter)
+    }
 }
 
 fun Element.dateTimeMillis(
